@@ -49,15 +49,12 @@ $('download-pass').addEventListener('click', () => {
  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600"><rect width="1000" height="600" fill="#0a100a"/><rect x="22" y="22" width="956" height="556" fill="none" stroke="#6e8951"/><rect x="32" y="32" width="936" height="536" fill="none" stroke="#283721"/><g fill="#c5ee91" font-family="Arial,sans-serif" text-anchor="middle"><text x="500" y="90" font-size="13" letter-spacing="5">LATVERIAN PRIORITY DISPATCH</text><text x="500" y="195" font-size="78" font-weight="900">YOU ARE SUMMONED.</text><text x="500" y="252" font-size="22" letter-spacing="3">AVENGERS: DOOMSDAY</text><text x="500" y="335" font-size="30" textLength="'+Math.min(800,traveler.length*18)+'" lengthAdjust="spacingAndGlyphs">'+name+'</text><text x="500" y="400" font-size="20" letter-spacing="3">DECEMBER 17, 2026</text><text x="500" y="446" font-size="14">Your universe. Your theater. Your people.</text><text x="500" y="510" font-size="11" fill="#83936e">FAN INVITATION · NOT A MOVIE TICKET · NO RESERVED SEAT</text><text x="500" y="542" font-size="10" fill="#83936e">Marvel characters belong to Marvel.</text></g></svg>';
  download(svg,'image/svg+xml','doomsday-invitation.svg'); toast('YOUR INVITATION HAS BEEN DOWNLOADED.');
 });
-$('calendar').addEventListener('click', () => {
- const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Doomsday Fan Experience//Invitation//EN','BEGIN:VEVENT','UID:doomsday-release-20261217@fan-invitation.local','DTSTAMP:20261124T000000Z','DTSTART;VALUE=DATE:20261217','DTEND;VALUE=DATE:20261218','SUMMARY:Avengers: Doomsday — India release day','DESCRIPTION:Choose a screening with your crew. Fan reminder only; no tickets or seats reserved.','END:VEVENT','END:VCALENDAR'];
- download(lines.join('\r\n')+'\r\n','text/calendar;charset=utf-8','doomsday-release.ics'); toast('CALENDAR REMINDER DOWNLOADED.');
-});
+$('calendar').addEventListener('click', () => $('calendar-dialog').showModal());
 const ambience = $('ambience');
 const soundButton = $('sound');
 let soundPending = false;
 let resumeOnVisible = false;
-ambience.volume = 0.6;
+ambience.volume = 0.45;
 function updateSoundState() {
  const playing = !ambience.paused && !ambience.ended;
  soundButton.setAttribute('aria-pressed', String(playing));

@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Doomsday Fan Experience//Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:doomsday-release-20261217@fan-invitation.local
+DTSTAMP:20261124T000000Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+SUMMARY:Avengers: Doomsday — India release day
+DESCRIPTION:Avengers: Doomsday arrives in India on December 17\, 2026. Ch
+ oose a screening with your crew. Fan reminder only\; no tickets or seats
+  reserved.
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Doomsday arrives in India tomorrow.
+END:VALARM
+END:VEVENT
+END:VCALENDAR

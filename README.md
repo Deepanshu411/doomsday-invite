@@ -21,8 +21,8 @@ For FUNCTION_INVOCATION_FAILED, inspect the deployment runtime logs for the actu
 - Countdown to December 17, 2026 at 00:00 IST (UTC+05:30). This is a release-day milestone, not a claimed screening time.
 - Intercepted-transmission intro, ambient particle field, orbital animation, scrolling ticker, scroll reveals, animated Fantastic Four spacecraft and X-vault scan.
 - Three source-linked dossiers separating confirmed footage from fan interpretation.
-- Optional original 16-second cinematic ambience loop: audible harmonic drone, metallic tones and clock ticks. Native audio playback starts on a tap; no autoplay or copyrighted soundtrack. The button reflects playback success and handles errors. Regenerate the WAV with node scripts/generate-audio.mjs.
-- Browser-local traveler name, SVG invitation download and all-day ICS calendar reminder. No ticket booking, RSVP service or server-side personal data.
+- Optional original 32-second stereo cinematic score: soft ensemble pads, felt-like notes and a rounded pulse. Native audio playback starts on a tap; no autoplay or copyrighted soundtrack. The button reflects playback success and handles errors. Regenerate the WAV with node scripts/generate-audio.mjs.
+- Browser-local traveler name, SVG invitation download, and calendar chooser with prefilled Google Calendar / Outlook events plus an inline Apple Calendar event and explicit ICS fallback. Calendar apps require a final Save; native app handoff depends on the device. No ticket booking, RSVP service or server-side personal data.
 - Keyboard-accessible modal dialogs, focus indicators and reduced-motion support.
 - Type DOOM outside the input for a hidden Latverian protocol.
 
