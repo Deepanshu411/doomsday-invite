@@ -27,9 +27,13 @@ document.querySelectorAll('[data-evidence]').forEach(button => button.addEventLi
  const dossier = dossiers[button.dataset.evidence];
  $('dossier-label').textContent = dossier.label; $('dossier-title').textContent = dossier.title;
  $('dossier-body').textContent = dossier.body; $('dossier-detail').textContent = dossier.detail;
- $('dossier-source').href = dossier.source; $('dossier-dialog').showModal();
+ $('dossier-source').href = dossier.source; openDialog($('dossier-dialog'));
 }));
-$('trailer').addEventListener('click', () => $('trailer-dialog').showModal());
+function openDialog(dialog) {
+ if (typeof dialog.showModal === 'function') { try { if (!dialog.open) dialog.showModal(); return; } catch {} }
+ dialog.setAttribute('open', ''); dialog.open = true;
+}
+$('trailer').addEventListener('click', () => openDialog($('trailer-dialog')));
 document.querySelectorAll('dialog').forEach(dialog => {
  dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
  dialog.addEventListener('click', event => { const r=dialog.getBoundingClientRect(); if (event.target===dialog && (event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)) dialog.close(); });
@@ -49,19 +53,26 @@ $('download-pass').addEventListener('click', () => {
  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600"><rect width="1000" height="600" fill="#0a100a"/><rect x="22" y="22" width="956" height="556" fill="none" stroke="#6e8951"/><rect x="32" y="32" width="936" height="536" fill="none" stroke="#283721"/><g fill="#c5ee91" font-family="Arial,sans-serif" text-anchor="middle"><text x="500" y="90" font-size="13" letter-spacing="5">LATVERIAN PRIORITY DISPATCH</text><text x="500" y="195" font-size="78" font-weight="900">YOU ARE SUMMONED.</text><text x="500" y="252" font-size="22" letter-spacing="3">AVENGERS: DOOMSDAY</text><text x="500" y="335" font-size="30" textLength="'+Math.min(800,traveler.length*18)+'" lengthAdjust="spacingAndGlyphs">'+name+'</text><text x="500" y="400" font-size="20" letter-spacing="3">DECEMBER 17, 2026</text><text x="500" y="446" font-size="14">Your universe. Your theater. Your people.</text><text x="500" y="510" font-size="11" fill="#83936e">FAN INVITATION · NOT A MOVIE TICKET · NO RESERVED SEAT</text><text x="500" y="542" font-size="10" fill="#83936e">Marvel characters belong to Marvel.</text></g></svg>';
  download(svg,'image/svg+xml','doomsday-invitation.svg'); toast('YOUR INVITATION HAS BEEN DOWNLOADED.');
 });
-$('calendar').addEventListener('click', () => $('calendar-dialog').showModal());
+function openCalendar() {
+ const ua = typeof navigator === 'undefined' ? '' : navigator.userAgent || '';
+ const apple = /iPhone|iPad|iPod|Macintosh/.test(ua);
+ $('calendar-apple').classList.toggle('recommended', apple);
+ openDialog($('calendar-dialog'));
+}
+$('calendar').addEventListener('click', openCalendar);
+document.querySelectorAll('[data-open-calendar]').forEach(button => button.addEventListener('click', openCalendar));
 const ambience = $('ambience');
 const soundButton = $('sound');
 let soundPending = false;
 let resumeOnVisible = false;
-ambience.volume = 0.45;
+ambience.volume = 0.8;
 function updateSoundState() {
  const playing = !ambience.paused && !ambience.ended;
  soundButton.setAttribute('aria-pressed', String(playing));
- soundButton.setAttribute('aria-label', playing ? 'Mute cinematic ambience' : 'Play cinematic ambience');
- $('sound-label').textContent = playing ? 'SOUND ON' : 'SOUND OFF';
+ soundButton.setAttribute('aria-label', playing ? 'Mute the Doom theme' : 'Play the Doom theme');
+ $('sound-label').textContent = soundPending && !playing ? 'LOADING…' : playing ? 'SOUND ON' : 'SOUND OFF';
 }
-async function playAmbience() {
+async function playAmbience(fromUser = true) {
  try {
  // Keep play() directly in the click handler's call stack for mobile playback policies.
  await ambience.play();
@@ -69,7 +80,8 @@ async function playAmbience() {
  } catch {
  ambience.pause();
  updateSoundState();
- toast('SOUND COULD NOT START. TAP SOUND OFF TO TRY AGAIN.');
+ // Resuming after a tab switch has no user gesture and may be blocked; stay off quietly.
+ if (fromUser) toast('SOUND COULD NOT START. TAP SOUND OFF TO TRY AGAIN.');
  }
 }
 async function toggleSound() {
@@ -79,13 +91,15 @@ async function toggleSound() {
  soundPending = true;
  soundButton.disabled = true;
  soundButton.setAttribute('aria-busy', 'true');
- try { await playAmbience(); }
- finally { soundPending = false; soundButton.disabled = false; soundButton.setAttribute('aria-busy', 'false'); }
+ const started = playAmbience();
+ updateSoundState();
+ try { await started; }
+ finally { soundPending = false; soundButton.disabled = false; soundButton.setAttribute('aria-busy', 'false'); updateSoundState(); }
 }
 ['play', 'playing', 'pause', 'ended'].forEach(type => ambience.addEventListener(type, updateSoundState));
 ambience.addEventListener('error', () => {
  ambience.pause(); updateSoundState();
- toast('AMBIENT AUDIO COULD NOT LOAD. RELOAD THE PAGE AND TRY AGAIN.');
+ toast('THE DOOM THEME COULD NOT LOAD. RELOAD THE PAGE AND TRY AGAIN.');
 });
 soundButton.addEventListener('click', toggleSound);
 updateSoundState();
@@ -95,7 +109,7 @@ document.addEventListener('visibilitychange', () => {
  if (resumeOnVisible) ambience.pause();
  } else if (resumeOnVisible) {
  resumeOnVisible = false;
- void playAmbience();
+ void playAmbience(false);
  }
 });
 

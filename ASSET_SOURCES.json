@@ -14,10 +14,10 @@
       "credit": "Marvel Studios / Disney; official promotional artwork"
     },
     {
-      "file": "dist/assets/doomsday-ambience-v2.wav",
+      "file": "dist/assets/doom-theme.wav",
       "source": "Generated locally by scripts/generate-audio.mjs",
-      "credit": "Original soft cinematic score: ensemble pads, felt-like notes and rounded pulse; no external samples",
-      "duration_seconds": 32
+      "credit": "\"Throne of Latveria\": original Doom theme composed for this fan invitation (D minor march, formant choir, low brass motif, string ostinato, war drums, anvil). No samples and no existing melodies.",
+      "duration_seconds": 48
     }
   ],
   "references": [
