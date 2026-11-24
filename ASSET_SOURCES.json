@@ -1,7 +1,7 @@
 {
   "verified_on": "2026-11-24",
   "movie": "https://movies.disney.com/avengers-doomsday",
-  "release_milestone": "2026-12-18T00:00:00Z",
+  "release_milestone": "2026-12-17T00:00:00+05:30",
   "assets": [
     {
       "file": "dist/assets/official-banner.jpg",
@@ -34,5 +34,7 @@
   ],
   "generation": {
     "status": "No generated artwork used. Image tool rejected the generation request; official released assets were used instead."
-  }
+  },
+  "release_region": "India",
+  "release_date_source": "User-provided India release date"
 }

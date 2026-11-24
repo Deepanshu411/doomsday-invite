@@ -8,7 +8,7 @@ From this directory, run npm run dev and open http://localhost:4173. No installa
 
 ## Experience
 
-- Countdown to December 18, 2026 at 00:00 UTC. This is a release-day milestone, not a claimed screening time.
+- Countdown to December 17, 2026 at 00:00 IST (UTC+05:30). This is a release-day milestone, not a claimed screening time.
 - Intercepted-transmission intro, ambient particle field, orbital animation, scrolling ticker, scroll reveals, animated Fantastic Four spacecraft and X-vault scan.
 - Three source-linked dossiers separating confirmed footage from fan interpretation.
 - Optional Web Audio atmosphere; no autoplay and no copyrighted soundtrack.
