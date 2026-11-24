@@ -53,24 +53,55 @@ $('calendar').addEventListener('click', () => {
  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Doomsday Fan Experience//Invitation//EN','BEGIN:VEVENT','UID:doomsday-release-20261217@fan-invitation.local','DTSTAMP:20261124T000000Z','DTSTART;VALUE=DATE:20261217','DTEND;VALUE=DATE:20261218','SUMMARY:Avengers: Doomsday — India release day','DESCRIPTION:Choose a screening with your crew. Fan reminder only; no tickets or seats reserved.','END:VEVENT','END:VCALENDAR'];
  download(lines.join('\r\n')+'\r\n','text/calendar;charset=utf-8','doomsday-release.ics'); toast('CALENDAR REMINDER DOWNLOADED.');
 });
-let audioContext, master, soundOn = false;
-let oscillators = [];
-async function toggleSound() {
- try {
- if (!audioContext) {
- const Audio = window.AudioContext || window.webkitAudioContext;
- if (!Audio) return toast('AMBIENT AUDIO IS NOT AVAILABLE IN THIS BROWSER.');
- audioContext = new Audio(); master=audioContext.createGain(); master.gain.value=0; master.connect(audioContext.destination);
- [55,82.41,110.08].forEach((frequency,i)=>{ const osc=audioContext.createOscillator(), gain=audioContext.createGain(); osc.type='sine';osc.frequency.value=frequency;gain.gain.value=[.4,.12,.07][i];osc.connect(gain);gain.connect(master);osc.start();oscillators.push(osc); });
- }
- soundOn=!soundOn;
- if(soundOn) await audioContext.resume();
- master.gain.cancelScheduledValues(audioContext.currentTime); master.gain.setTargetAtTime(soundOn?.16:0,audioContext.currentTime,.3);
- $('sound').setAttribute('aria-pressed',String(soundOn)); $('sound').setAttribute('aria-label',soundOn?'Disable ambient sound':'Enable ambient sound'); $('sound-label').textContent=soundOn?'SOUND ON':'SOUND OFF';
- }catch{soundOn=false;toast('AUDIO COULD NOT START. PLEASE TRY AGAIN.');}
+const ambience = $('ambience');
+const soundButton = $('sound');
+let soundPending = false;
+let resumeOnVisible = false;
+ambience.volume = 0.6;
+function updateSoundState() {
+ const playing = !ambience.paused && !ambience.ended;
+ soundButton.setAttribute('aria-pressed', String(playing));
+ soundButton.setAttribute('aria-label', playing ? 'Mute cinematic ambience' : 'Play cinematic ambience');
+ $('sound-label').textContent = playing ? 'SOUND ON' : 'SOUND OFF';
 }
-$('sound').addEventListener('click',toggleSound);
-document.addEventListener('visibilitychange',()=>{if(audioContext) {if(document.hidden) audioContext.suspend();else if(soundOn) audioContext.resume();}});
+async function playAmbience() {
+ try {
+ // Keep play() directly in the click handler's call stack for mobile playback policies.
+ await ambience.play();
+ updateSoundState();
+ } catch {
+ ambience.pause();
+ updateSoundState();
+ toast('SOUND COULD NOT START. TAP SOUND OFF TO TRY AGAIN.');
+ }
+}
+async function toggleSound() {
+ if (soundPending) return;
+ resumeOnVisible = false;
+ if (!ambience.paused) { ambience.pause(); updateSoundState(); return; }
+ soundPending = true;
+ soundButton.disabled = true;
+ soundButton.setAttribute('aria-busy', 'true');
+ try { await playAmbience(); }
+ finally { soundPending = false; soundButton.disabled = false; soundButton.setAttribute('aria-busy', 'false'); }
+}
+['play', 'playing', 'pause', 'ended'].forEach(type => ambience.addEventListener(type, updateSoundState));
+ambience.addEventListener('error', () => {
+ ambience.pause(); updateSoundState();
+ toast('AMBIENT AUDIO COULD NOT LOAD. RELOAD THE PAGE AND TRY AGAIN.');
+});
+soundButton.addEventListener('click', toggleSound);
+updateSoundState();
+document.addEventListener('visibilitychange', () => {
+ if (document.hidden) {
+ resumeOnVisible = !ambience.paused;
+ if (resumeOnVisible) ambience.pause();
+ } else if (resumeOnVisible) {
+ resumeOnVisible = false;
+ void playAmbience();
+ }
+});
+
 const canvas=$('particles'), context=canvas.getContext('2d');
 let particles=[], animation, particleWidth=0,particleHeight=0;
 function resizeParticles(){ const box=canvas.getBoundingClientRect(); particleWidth=box.width;particleHeight=box.height; const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=particleWidth*dpr;canvas.height=particleHeight*dpr;context?.setTransform(dpr,0,0,dpr,0,0); particles=Array.from({length:42},()=>({x:Math.random()*particleWidth,y:Math.random()*particleHeight,r:Math.random()*1.2+.3,speed:Math.random()*.22+.08,alpha:Math.random()*.45+.1})); }

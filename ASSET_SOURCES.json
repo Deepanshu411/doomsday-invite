@@ -12,6 +12,12 @@
       "file": "dist/assets/doom-hero.jpg",
       "source": "https://lumiere-a.akamaihd.net/v1/images/g_movies_avengersdoomsday_drdoom_poster_2f49df7d.jpeg?width=900",
       "credit": "Marvel Studios / Disney; official promotional artwork"
+    },
+    {
+      "file": "dist/assets/doomsday-ambience.wav",
+      "source": "Generated locally by scripts/generate-audio.mjs",
+      "credit": "Original synthesized cinematic ambience; no Marvel music or samples",
+      "duration_seconds": 16
     }
   ],
   "references": [

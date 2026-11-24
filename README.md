@@ -11,7 +11,7 @@ From this directory, run npm run dev and open http://localhost:4173. No installa
 - Countdown to December 17, 2026 at 00:00 IST (UTC+05:30). This is a release-day milestone, not a claimed screening time.
 - Intercepted-transmission intro, ambient particle field, orbital animation, scrolling ticker, scroll reveals, animated Fantastic Four spacecraft and X-vault scan.
 - Three source-linked dossiers separating confirmed footage from fan interpretation.
-- Optional Web Audio atmosphere; no autoplay and no copyrighted soundtrack.
+- Optional original 16-second cinematic ambience loop: audible harmonic drone, metallic tones and clock ticks. Native audio playback starts on a tap; no autoplay or copyrighted soundtrack. The button reflects playback success and handles errors. Regenerate the WAV with node scripts/generate-audio.mjs.
 - Browser-local traveler name, SVG invitation download and all-day ICS calendar reminder. No ticket booking, RSVP service or server-side personal data.
 - Keyboard-accessible modal dialogs, focus indicators and reduced-motion support.
 - Type DOOM outside the input for a hidden Latverian protocol.
