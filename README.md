@@ -6,6 +6,16 @@ A cinematic, responsive, dependency-free fan invitation inspired by Avengers: Do
 
 From this directory, run npm run dev and open http://localhost:4173. No installation is required. PORT can override the port. npm run check verifies syntax, local files and navigation. npm test runs interaction and HTTP checks. npm run build validates the ready-to-serve dist directory.
 
+## Deploy to Vercel
+
+This site runs entirely in the browser. The checked-in vercel.json selects the Other framework preset, runs npm run build, and publishes dist/ as static files. The local preview server lives at scripts/dev-server.mjs and is not a production function.
+
+Import Deepanshu411/doomsday-invite and use the repository root (leave Root Directory empty). If importing a larger repository that contains doomsday/ as a subfolder, select doomsday as Root Directory instead. The configuration file must be inside the selected root.
+
+Vercel settings: Framework Preset = Other; Build Command = npm run build; Output Directory = dist. No start command, API function, environment variables, or rewrites are needed. Redeploy the commit containing vercel.json. A cached redeploy of an older commit will not include the fix.
+
+For FUNCTION_INVOCATION_FAILED, inspect the deployment runtime logs for the actual exception. A deployment of this static configuration should serve the HTML, JavaScript, images and WAV directly without a function invocation.
+
 ## Experience
 
 - Countdown to December 17, 2026 at 00:00 IST (UTC+05:30). This is a release-day milestone, not a claimed screening time.
