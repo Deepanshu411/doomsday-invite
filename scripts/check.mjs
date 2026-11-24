@@ -1,0 +1,13 @@
+import {readFile,access} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const html=await readFile(path.join(root,'dist/index.html'),'utf8');
+const refs=[...html.matchAll(/(?:src|href)="([^"#]+)"/g)].map(m=>m[1]).filter(s=>!s.startsWith('http'));
+for(const ref of refs)await access(path.join(root,'dist',ref));
+const ids=[...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);
+if(new Set(ids).size!==ids.length)throw new Error('Duplicate HTML IDs');
+for(const [,id] of html.matchAll(/href="#([^"]+)"/g))if(!ids.includes(id))throw new Error('Missing anchor: '+id);
+execFileSync('node',['--check',path.join(root,'dist/app.js')],{stdio:'inherit'});
+console.log('PASS: JavaScript syntax, local assets, unique IDs and navigation anchors');

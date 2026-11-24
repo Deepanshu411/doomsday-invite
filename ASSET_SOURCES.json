@@ -1,0 +1,38 @@
+{
+  "verified_on": "2026-11-24",
+  "movie": "https://movies.disney.com/avengers-doomsday",
+  "release_milestone": "2026-12-18T00:00:00Z",
+  "assets": [
+    {
+      "file": "dist/assets/official-banner.jpg",
+      "source": "https://lumiere-a.akamaihd.net/v1/images/pp_avengersdoomsday_marvel_banner_desktop_3c5198a2.jpeg?width=1200",
+      "credit": "Marvel Studios / Disney; official promotional artwork"
+    },
+    {
+      "file": "dist/assets/doom-hero.jpg",
+      "source": "https://lumiere-a.akamaihd.net/v1/images/g_movies_avengersdoomsday_drdoom_poster_2f49df7d.jpeg?width=900",
+      "credit": "Marvel Studios / Disney; official promotional artwork"
+    }
+  ],
+  "references": [
+    {
+      "title": "Official trailer",
+      "url": "https://www.youtube.com/watch?v=iFl4YeX6jmc"
+    },
+    {
+      "title": "The X-Men Will Return",
+      "url": "https://www.youtube.com/watch?v=kH1XlwHQv9o"
+    },
+    {
+      "title": "Fantastic Four credits scene",
+      "url": "https://time.com/7304793/the-fantastic-four-first-steps-end-credits-scene-mcu/"
+    },
+    {
+      "title": "Thunderbolts credits scene",
+      "url": "https://comicbook.com/movies/news/why-fantastic-four-doesnt-address-thunderbolts-post-credits-scene/"
+    }
+  ],
+  "generation": {
+    "status": "No generated artwork used. Image tool rejected the generation request; official released assets were used instead."
+  }
+}
